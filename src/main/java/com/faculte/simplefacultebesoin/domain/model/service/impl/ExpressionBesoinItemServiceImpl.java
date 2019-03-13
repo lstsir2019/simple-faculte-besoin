@@ -5,12 +5,12 @@
  */
 package com.faculte.simplefacultebesoin.domain.model.service.impl;
 
-
 import com.faculte.simplefacultebesoin.domain.bean.ExpressionBesoin;
 import com.faculte.simplefacultebesoin.domain.bean.ExpressionBesoinItem;
 import com.faculte.simplefacultebesoin.domain.model.dao.ExpressionBesoinItemDao;
 import com.faculte.simplefacultebesoin.domain.model.service.ExpressionBesoinItemService;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,11 +41,45 @@ public class ExpressionBesoinItemServiceImpl implements ExpressionBesoinItemServ
             return 1;
         }
     }
-    
+
     @Override
     public List<ExpressionBesoinItem> findByExpressionBesoinReference(String reference) {
-       return expressionBesoinItemDao.findByExpressionBesoinReference(reference);
+        return expressionBesoinItemDao.findByExpressionBesoinReference(reference);
     }
+
+    @Override
+    public int deleteItem(Long id) {
+        boolean exist = expressionBesoinItemDao.existsById(id);
+
+        if (!exist) {
+            return -1;
+        } else {
+            ExpressionBesoinItem expressionBesoinItem = expressionBesoinItemDao.getOne(id);
+            if (expressionBesoinItem.getQuantiteCommander() != 0) {
+                return -2;
+            } else {
+                expressionBesoinItemDao.deleteById(id);
+                return 1;
+            }
+        }
+    }
+    
+    @Override
+    public int accoder(ExpressionBesoinItem expressionBesoinItem) {
+        ExpressionBesoinItem ebi = expressionBesoinItemDao.getOne(expressionBesoinItem.getId());
+
+        if (ebi.getQuantiteAccorder()!=0) {
+            return -1;
+        }else if (expressionBesoinItem.getQuantiteAccorder() > expressionBesoinItem.getQuantiteDemande()) {
+            return -2;
+        }else{
+            expressionBesoinItem.setQuantiteAccorder(expressionBesoinItem.getQuantiteAccorder());
+            expressionBesoinItemDao.save(expressionBesoinItem);
+            return 1;
+        }
+    }
+    
+    
 
     public ExpressionBesoinItemDao getExpressionBesoinItemDao() {
         return expressionBesoinItemDao;
@@ -56,11 +90,16 @@ public class ExpressionBesoinItemServiceImpl implements ExpressionBesoinItemServ
     }
 
     @Override
-    public int deleteItem(Long id) {
-        expressionBesoinItemDao.deleteById(id);
-        return 1;
+    public ExpressionBesoinItem findById(Long id) {
+        boolean exist = expressionBesoinItemDao.existsById(id);
+        if (exist) {
+            ExpressionBesoinItem expressionBesoinItem = expressionBesoinItemDao.getOne(id);
+            return expressionBesoinItem;
+        }else{
+            return null;
+        }
     }
-    
 
     
+
 }

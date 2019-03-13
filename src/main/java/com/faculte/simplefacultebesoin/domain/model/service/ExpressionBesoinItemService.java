@@ -17,4 +17,6 @@ public interface ExpressionBesoinItemService {
     public int create(ExpressionBesoin expressionBesoin,List<ExpressionBesoinItem> expressionBesoinItems);
     public List<ExpressionBesoinItem> findByExpressionBesoinReference(String reference);
     public int deleteItem(Long id);
+    public int accoder(ExpressionBesoinItem expressionBesoinItem);
+    public ExpressionBesoinItem findById(Long id);
 }
