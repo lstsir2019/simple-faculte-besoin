@@ -9,8 +9,8 @@ import com.faculte.simplefacultebesoin.domain.bean.ExpressionBesoin;
 import com.faculte.simplefacultebesoin.domain.bean.ExpressionBesoinItem;
 import com.faculte.simplefacultebesoin.domain.model.dao.ExpressionBesoinItemDao;
 import com.faculte.simplefacultebesoin.domain.model.service.ExpressionBesoinItemService;
+import com.faculte.simplefacultebesoin.domain.model.service.ExpressionBesoinService;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +23,9 @@ public class ExpressionBesoinItemServiceImpl implements ExpressionBesoinItemServ
 
     @Autowired
     ExpressionBesoinItemDao expressionBesoinItemDao;
+    
+    @Autowired
+    ExpressionBesoinService expressionBesoinService;
 
     @Override
     public int create(ExpressionBesoin expressionBesoin, List<ExpressionBesoinItem> expressionBesoinItems) {
@@ -67,13 +70,14 @@ public class ExpressionBesoinItemServiceImpl implements ExpressionBesoinItemServ
     @Override
     public int accoder(ExpressionBesoinItem expressionBesoinItem) {
         ExpressionBesoinItem ebi = expressionBesoinItemDao.getOne(expressionBesoinItem.getId());
-
+        
         if (ebi.getQuantiteAccorder()!=0) {
             return -1;
         }else if (expressionBesoinItem.getQuantiteAccorder() > expressionBesoinItem.getQuantiteDemande()) {
             return -2;
         }else{
             expressionBesoinItem.setQuantiteAccorder(expressionBesoinItem.getQuantiteAccorder());
+            expressionBesoinItem.setExpressionBesoin(expressionBesoinService.findByReference(ebi.getExpressionBesoin().getReference()));
             expressionBesoinItemDao.save(expressionBesoinItem);
             return 1;
         }
