@@ -23,7 +23,7 @@ public class ExpressionBesoinItemServiceImpl implements ExpressionBesoinItemServ
 
     @Autowired
     ExpressionBesoinItemDao expressionBesoinItemDao;
-    
+
     @Autowired
     ExpressionBesoinService expressionBesoinService;
 
@@ -66,24 +66,27 @@ public class ExpressionBesoinItemServiceImpl implements ExpressionBesoinItemServ
             }
         }
     }
-    
+
     @Override
     public int accoder(ExpressionBesoinItem expressionBesoinItem) {
         ExpressionBesoinItem ebi = expressionBesoinItemDao.getOne(expressionBesoinItem.getId());
-        
-        if (ebi.getQuantiteAccorder()!=0) {
+
+        if (ebi.getQuantiteAccorder() != 0) {
             return -1;
-        }else if (expressionBesoinItem.getQuantiteAccorder() > expressionBesoinItem.getQuantiteDemande()) {
+        } else if (expressionBesoinItem.getQuantiteAccorder() > expressionBesoinItem.getQuantiteDemande()) {
             return -2;
-        }else{
+        } else {
             expressionBesoinItem.setQuantiteAccorder(expressionBesoinItem.getQuantiteAccorder());
             expressionBesoinItem.setExpressionBesoin(expressionBesoinService.findByReference(ebi.getExpressionBesoin().getReference()));
             expressionBesoinItemDao.save(expressionBesoinItem);
             return 1;
         }
     }
-    
-    
+
+    @Override
+    public List<ExpressionBesoinItem> findByReferenceProduit(String referenceProduit) {
+        return expressionBesoinItemDao.findByReferenceProduit(referenceProduit);
+    }
 
     public ExpressionBesoinItemDao getExpressionBesoinItemDao() {
         return expressionBesoinItemDao;
@@ -99,11 +102,14 @@ public class ExpressionBesoinItemServiceImpl implements ExpressionBesoinItemServ
         if (exist) {
             ExpressionBesoinItem expressionBesoinItem = expressionBesoinItemDao.getOne(id);
             return expressionBesoinItem;
-        }else{
+        } else {
             return null;
         }
     }
 
-    
+    @Override
+    public List<ExpressionBesoinItem> findByExpressionBesoinCodeEntity(String codeEntity) {
+        return expressionBesoinItemDao.findByExpressionBesoinCodeEntity(codeEntity);
+    }
 
 }

@@ -17,4 +17,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ExpressionBesoinItemDao extends JpaRepository<ExpressionBesoinItem, Long>{
     public List<ExpressionBesoinItem> findByExpressionBesoinReference(String reference);
+    public List<ExpressionBesoinItem> findByReferenceProduit(String referenceProduit);
+    public List<ExpressionBesoinItem> findByExpressionBesoinCodeEntity(String codeEntity);
+    
 }

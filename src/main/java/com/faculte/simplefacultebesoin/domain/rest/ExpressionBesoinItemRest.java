@@ -10,6 +10,7 @@ import com.faculte.simplefacultebesoin.domain.bean.ExpressionBesoinItem;
 import com.faculte.simplefacultebesoin.domain.model.service.ExpressionBesoinItemService;
 import com.faculte.simplefacultebesoin.domain.rest.converter.AbstractConverter;
 import com.faculte.simplefacultebesoin.domain.rest.vo.ExpressionBesoinItemVo;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -42,15 +43,30 @@ public class ExpressionBesoinItemRest {
     public int deleteItem(@PathVariable Long id) {
         return expressionBesoinItemService.deleteItem(id);
     }
+    
     @PutMapping("/accorder")
     public int accoder(@RequestBody ExpressionBesoinItemVo expressionBesoinItem) {
         ExpressionBesoinItem ebi = expressionBesoinItemConverter.toItem(expressionBesoinItem);
         return expressionBesoinItemService.accoder(ebi);
     }
+    
+    
     @GetMapping("/find/{id}")
     public ExpressionBesoinItemVo findById(@PathVariable Long id) {
         return expressionBesoinItemConverter.toVo(expressionBesoinItemService.findById(id)) ;
     }
+    @GetMapping("/produit/{referenceProduit}")
+    public List<ExpressionBesoinItemVo> findByReferenceProduit(@PathVariable String referenceProduit) {
+        return expressionBesoinItemConverter.toVo(expressionBesoinItemService.findByReferenceProduit(referenceProduit));
+    }
+    @GetMapping("/entity/{codeEntity}")
+    public List<ExpressionBesoinItemVo> findByExpressionBesoinCodeEntity(@PathVariable String codeEntity) {
+        return expressionBesoinItemConverter.toVo(expressionBesoinItemService.findByExpressionBesoinCodeEntity(codeEntity)) ;
+    }
+    
+    
+    
+    
     
     
    
