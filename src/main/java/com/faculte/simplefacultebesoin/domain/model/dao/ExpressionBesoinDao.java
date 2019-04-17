@@ -6,6 +6,7 @@
 package com.faculte.simplefacultebesoin.domain.model.dao;
 
 import com.faculte.simplefacultebesoin.domain.bean.ExpressionBesoin;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,4 +17,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ExpressionBesoinDao extends JpaRepository<ExpressionBesoin, Long>{
     public ExpressionBesoin findByReference(String reference);
+    public List<ExpressionBesoin> findByCodeEntity(String reference);
 }

@@ -17,6 +17,8 @@ public class ExpressionBesoinVo {
     private String codeEntity;
     private String codePersonel;
     private String dateExpression ;
+    private String dateMin ;
+    private String dateMax ;
     private List<ExpressionBesoinItemVo> expressionBesoinItemsVos;
 
     public Long getId() {
@@ -66,6 +68,23 @@ public class ExpressionBesoinVo {
     public void setExpressionBesoinItemsVos(List<ExpressionBesoinItemVo> expressionBesoinItemsVos) {
         this.expressionBesoinItemsVos = expressionBesoinItemsVos;
     }
+
+    public String getDateMin() {
+        return dateMin;
+    }
+
+    public void setDateMin(String dateMin) {
+        this.dateMin = dateMin;
+    }
+
+    public String getDateMax() {
+        return dateMax;
+    }
+
+    public void setDateMax(String dateMax) {
+        this.dateMax = dateMax;
+    }
+    
     
     
 }

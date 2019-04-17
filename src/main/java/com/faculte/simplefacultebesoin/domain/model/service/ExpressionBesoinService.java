@@ -6,6 +6,7 @@
 package com.faculte.simplefacultebesoin.domain.model.service;
 
 import com.faculte.simplefacultebesoin.domain.bean.ExpressionBesoin;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,4 +17,5 @@ public interface ExpressionBesoinService {
     public ExpressionBesoin findByReference(String reference);
     public int create(ExpressionBesoin expressionBesoin);
     public List<ExpressionBesoin> findAll();
+    public List<ExpressionBesoin> findByCriteria(String reference, String codeEntity , Date dateMin , Date dateMax);
 }

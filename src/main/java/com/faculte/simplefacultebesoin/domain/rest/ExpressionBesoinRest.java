@@ -5,15 +5,19 @@
  */
 package com.faculte.simplefacultebesoin.domain.rest;
 
-
+import com.faculte.simplefacultebesoin.commun.util.DateUtil;
 import com.faculte.simplefacultebesoin.domain.bean.ExpressionBesoin;
 import com.faculte.simplefacultebesoin.domain.bean.ExpressionBesoinItem;
 import com.faculte.simplefacultebesoin.domain.model.service.ExpressionBesoinItemService;
 import com.faculte.simplefacultebesoin.domain.model.service.ExpressionBesoinService;
 import com.faculte.simplefacultebesoin.domain.rest.converter.AbstractConverter;
 import com.faculte.simplefacultebesoin.domain.rest.converter.ExpressionBesoinItemConverter;
+import com.faculte.simplefacultebesoin.domain.rest.proxy.ProduitProxy;
 import com.faculte.simplefacultebesoin.domain.rest.vo.ExpressionBesoinItemVo;
 import com.faculte.simplefacultebesoin.domain.rest.vo.ExpressionBesoinVo;
+import com.faculte.simplefacultebesoin.domain.rest.vo.exchange.CategorieProduitVo;
+import com.faculte.simplefacultebesoin.domain.rest.vo.exchange.ProduitVo;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -30,46 +34,66 @@ import org.springframework.web.bind.annotation.RestController;
  * @author ismail boulaanait
  */
 @RestController()
-@CrossOrigin(origins={"http://localhost:4200"})
+@CrossOrigin(origins = {"http://localhost:4200"})
 @RequestMapping({"/faculte-besoin/expressionbesoins"})
 public class ExpressionBesoinRest {
-   
+
+    @Autowired
+    ProduitProxy produitProxy;
+
     @Autowired
     ExpressionBesoinService expressionBesoinService;
-    
+
     @Autowired
     ExpressionBesoinItemService expressionBesoinItemService;
-    
+
     @Autowired
     @Qualifier("expressionBesoinConverter")
     private AbstractConverter<ExpressionBesoin, ExpressionBesoinVo> expressionBesoinConverter;
-    
+
     @Autowired
     @Qualifier("expressionBesoinItemConverter")
     private AbstractConverter<ExpressionBesoinItem, ExpressionBesoinItemVo> expressionBesoinItemConverter;
-    
+
     @PostMapping("/")
     public int create(@RequestBody ExpressionBesoinVo expressionBesoinVo) {
         ExpressionBesoin eb = expressionBesoinConverter.toItem(expressionBesoinVo);
         return expressionBesoinService.create(eb);
     }
+
     @GetMapping("/reference/{reference}")
     public ExpressionBesoinVo findByReference(@PathVariable String reference) {
         ExpressionBesoin eb = expressionBesoinService.findByReference(reference);
         return expressionBesoinConverter.toVo(eb);
     }
+
     @GetMapping("/items/{reference}")
     public List<ExpressionBesoinItemVo> findByExpressionBesoinReference(@PathVariable String reference) {
         List<ExpressionBesoinItem> res = expressionBesoinItemService.findByExpressionBesoinReference(reference);
         return new ExpressionBesoinItemConverter().toVo(res);
     }
+
     @GetMapping("/")
     public List<ExpressionBesoinVo> findAll() {
         return expressionBesoinConverter.toVo(expressionBesoinService.findAll());
     }
-    
-    
-    
+
+    @PostMapping("/search")
+    public List<ExpressionBesoinVo> findByCriteria(@RequestBody ExpressionBesoinVo expressionBesoin) {
+        Date dateMin = DateUtil.parseDate(expressionBesoin.getDateMin());
+        Date dateMax = DateUtil.parseDate(expressionBesoin.getDateMax());
+        return expressionBesoinConverter.toVo(expressionBesoinService.findByCriteria(expressionBesoin.getReference(), expressionBesoin.getCodeEntity(), dateMin, dateMax));
+    }
+
+    @GetMapping("/categorieProduit")
+    public List<CategorieProduitVo> getAll() {
+        return produitProxy.findAll();
+    }
+
+    @GetMapping("/Produit/categorie/{libelle}")
+    public List<ProduitVo> findByCategorieProduitLibelle(@PathVariable String libelle) {
+        return produitProxy.findByCategorieProduitLibelle(libelle);
+    }
 
     public AbstractConverter<ExpressionBesoin, ExpressionBesoinVo> getExpressionBesoinConverter() {
         return expressionBesoinConverter;
@@ -78,7 +102,7 @@ public class ExpressionBesoinRest {
     public void setExpressionBesoinConverter(AbstractConverter<ExpressionBesoin, ExpressionBesoinVo> expressionBesoinConverter) {
         this.expressionBesoinConverter = expressionBesoinConverter;
     }
-    
+
     public ExpressionBesoinService getExpressionBesoinService() {
         return expressionBesoinService;
     }
@@ -102,6 +126,15 @@ public class ExpressionBesoinRest {
     public void setExpressionBesoinItemConverter(AbstractConverter<ExpressionBesoinItem, ExpressionBesoinItemVo> expressionBesoinItemConverter) {
         this.expressionBesoinItemConverter = expressionBesoinItemConverter;
     }
+
+    public ProduitProxy getProduitProxy() {
+        return produitProxy;
+    }
+
+    public void setProduitProxy(ProduitProxy produitProxy) {
+        this.produitProxy = produitProxy;
+    }
+
     
     
 }
