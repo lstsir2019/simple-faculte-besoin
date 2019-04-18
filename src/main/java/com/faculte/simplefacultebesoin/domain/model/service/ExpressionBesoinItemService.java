@@ -21,4 +21,5 @@ public interface ExpressionBesoinItemService {
     public ExpressionBesoinItem findById(Long id);
     public List<ExpressionBesoinItem> findByReferenceProduit(String referenceProduit);
     public List<ExpressionBesoinItem> findByExpressionBesoinCodeEntity(String codeEntity);
+    
 }
