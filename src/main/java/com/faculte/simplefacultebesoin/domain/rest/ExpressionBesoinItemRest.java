@@ -63,6 +63,10 @@ public class ExpressionBesoinItemRest {
     public List<ExpressionBesoinItemVo> findByExpressionBesoinCodeEntity(@PathVariable String codeEntity) {
         return expressionBesoinItemConverter.toVo(expressionBesoinItemService.findByExpressionBesoinCodeEntity(codeEntity)) ;
     }
+    @PutMapping("/reference/{id}/qteLivre/{qte}/increment")
+    public int incrementQteLivre(@PathVariable Long id,@PathVariable int qte) {
+        return expressionBesoinItemService.incrementQteLivre(id, qte);
+    }
     
     
     

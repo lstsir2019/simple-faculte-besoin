@@ -88,6 +88,22 @@ public class ExpressionBesoinItemServiceImpl implements ExpressionBesoinItemServ
         return expressionBesoinItemDao.findByReferenceProduit(referenceProduit);
     }
 
+    @Override
+    public int incrementQteLivre(Long id , int qte) {
+        ExpressionBesoinItem ebi = this.findById(id);
+        if (ebi == null) {
+            return -1;
+        }else{
+            if (qte > ebi.getQuantiteCommander() - ebi.getQuantiteLivre()) {
+                return -2;
+            }else{
+                ebi.setQuantiteLivre(ebi.getQuantiteLivre() + qte);
+                expressionBesoinItemDao.save(ebi);
+                return 1;
+            }
+        }
+    }
+
     public ExpressionBesoinItemDao getExpressionBesoinItemDao() {
         return expressionBesoinItemDao;
     }
