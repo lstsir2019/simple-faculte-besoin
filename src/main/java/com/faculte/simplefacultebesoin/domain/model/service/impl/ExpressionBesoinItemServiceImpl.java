@@ -128,4 +128,18 @@ public class ExpressionBesoinItemServiceImpl implements ExpressionBesoinItemServ
         return expressionBesoinItemDao.findByExpressionBesoinCodeEntity(codeEntity);
     }
 
+    @Override
+    public int incrementQteCommande(Long id, int qte) {
+        ExpressionBesoinItem expressionBesoinItem=this.findById(id);
+        if (expressionBesoinItem == null) {
+            return -1;
+        }else if (qte>expressionBesoinItem.getQuantiteAccorder()-expressionBesoinItem.getQuantiteCommander()) {
+            return -2;
+        }else{
+            expressionBesoinItem.setQuantiteCommander(expressionBesoinItem.getQuantiteCommander()+qte);
+            expressionBesoinItemDao.save(expressionBesoinItem);
+                return 1;
+        }
+    }
+
 }
