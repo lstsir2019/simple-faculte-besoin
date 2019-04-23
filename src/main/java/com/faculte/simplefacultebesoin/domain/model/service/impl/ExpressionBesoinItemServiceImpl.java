@@ -5,11 +5,14 @@
  */
 package com.faculte.simplefacultebesoin.domain.model.service.impl;
 
+import com.faculte.simplefacultebesoin.commun.util.NumberUtil;
 import com.faculte.simplefacultebesoin.domain.bean.ExpressionBesoin;
 import com.faculte.simplefacultebesoin.domain.bean.ExpressionBesoinItem;
 import com.faculte.simplefacultebesoin.domain.model.dao.ExpressionBesoinItemDao;
 import com.faculte.simplefacultebesoin.domain.model.service.ExpressionBesoinItemService;
 import com.faculte.simplefacultebesoin.domain.model.service.ExpressionBesoinService;
+import com.faculte.simplefacultebesoin.domain.rest.vo.ExpressionBesoinItemVo;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -84,19 +87,33 @@ public class ExpressionBesoinItemServiceImpl implements ExpressionBesoinItemServ
     }
 
     @Override
-    public List<ExpressionBesoinItem> findByReferenceProduit(String referenceProduit) {
-        return expressionBesoinItemDao.findByReferenceProduit(referenceProduit);
+    public List<ExpressionBesoinItemVo> findByReferenceProduit(String referenceProduit) {
+        List<ExpressionBesoinItem> data = expressionBesoinItemDao.findByReferenceProduit(referenceProduit);
+        List<ExpressionBesoinItemVo> res = new ArrayList();
+        for (ExpressionBesoinItem expressionBesoinItem : data) {
+            if (expressionBesoinItem.getQuantiteCommander() != expressionBesoinItem.getQuantiteAccorder()) {
+                ExpressionBesoinItemVo ebiv = new ExpressionBesoinItemVo();
+                ebiv.setId(expressionBesoinItem.getId());
+                ebiv.setReferenceProduit(expressionBesoinItem.getReferenceProduit());
+                ebiv.setQuantiteAccorder(NumberUtil.inttoString(expressionBesoinItem.getQuantiteAccorder()));
+                ebiv.setQuantiteCommander(NumberUtil.inttoString(expressionBesoinItem.getQuantiteCommander()));
+                ebiv.setEntityAdmin(expressionBesoinItem.getExpressionBesoin().getCodeEntity());
+                res.add(ebiv);
+            }
+
+        }
+        return res;
     }
 
     @Override
-    public int incrementQteLivre(Long id , int qte) {
+    public int incrementQteLivre(Long id, int qte) {
         ExpressionBesoinItem ebi = this.findById(id);
         if (ebi == null) {
             return -1;
-        }else{
+        } else {
             if (qte > ebi.getQuantiteCommander() - ebi.getQuantiteLivre()) {
                 return -2;
-            }else{
+            } else {
                 ebi.setQuantiteLivre(ebi.getQuantiteLivre() + qte);
                 expressionBesoinItemDao.save(ebi);
                 return 1;
@@ -130,15 +147,15 @@ public class ExpressionBesoinItemServiceImpl implements ExpressionBesoinItemServ
 
     @Override
     public int incrementQteCommande(Long id, int qte) {
-        ExpressionBesoinItem expressionBesoinItem=this.findById(id);
+        ExpressionBesoinItem expressionBesoinItem = this.findById(id);
         if (expressionBesoinItem == null) {
             return -1;
-        }else if (qte>expressionBesoinItem.getQuantiteAccorder()-expressionBesoinItem.getQuantiteCommander()) {
+        } else if (qte > expressionBesoinItem.getQuantiteAccorder() - expressionBesoinItem.getQuantiteCommander()) {
             return -2;
-        }else{
-            expressionBesoinItem.setQuantiteCommander(expressionBesoinItem.getQuantiteCommander()+qte);
+        } else {
+            expressionBesoinItem.setQuantiteCommander(expressionBesoinItem.getQuantiteCommander() + qte);
             expressionBesoinItemDao.save(expressionBesoinItem);
-                return 1;
+            return 1;
         }
     }
 

@@ -57,7 +57,7 @@ public class ExpressionBesoinItemRest {
 
     @GetMapping("/produit/{referenceProduit}")
     public List<ExpressionBesoinItemVo> findByReferenceProduit(@PathVariable String referenceProduit) {
-        return expressionBesoinItemConverter.toVo(expressionBesoinItemService.findByReferenceProduit(referenceProduit));
+        return expressionBesoinItemService.findByReferenceProduit(referenceProduit);
     }
 
     @GetMapping("/entity/{codeEntity}")
