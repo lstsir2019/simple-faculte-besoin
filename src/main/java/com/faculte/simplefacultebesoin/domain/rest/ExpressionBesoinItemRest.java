@@ -74,6 +74,11 @@ public class ExpressionBesoinItemRest {
     public int incrementQteCommande(@PathVariable Long id,@PathVariable int qte) {
         return expressionBesoinItemService.incrementQteCommande(id, qte);
     }
+    
+    @PutMapping("/reference/{id}/qteCommande/{qte}/decrement")
+    public int decrementQteCommande(@PathVariable Long id,@PathVariable int qte) {
+        return expressionBesoinItemService.decrementQteCommande(id, qte);
+    }
 
     
 

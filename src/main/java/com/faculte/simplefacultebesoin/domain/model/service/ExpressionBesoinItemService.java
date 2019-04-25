@@ -24,5 +24,6 @@ public interface ExpressionBesoinItemService {
     public List<ExpressionBesoinItem> findByExpressionBesoinCodeEntity(String codeEntity);
     public int incrementQteLivre(Long id,int qte);
     public int incrementQteCommande(Long id,int qte);
+    public int decrementQteCommande(Long id,int qte);
     
 }

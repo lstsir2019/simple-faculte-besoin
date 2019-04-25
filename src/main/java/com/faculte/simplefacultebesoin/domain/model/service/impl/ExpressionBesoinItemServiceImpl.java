@@ -159,4 +159,18 @@ public class ExpressionBesoinItemServiceImpl implements ExpressionBesoinItemServ
         }
     }
 
+    @Override
+    public int decrementQteCommande(Long id, int qte) {
+        ExpressionBesoinItem expressionBesoinItem = this.findById(id);
+        if (expressionBesoinItem == null) {
+            return -1;
+        }else if (qte > expressionBesoinItem.getQuantiteCommander()) {
+            return -2;
+        }else{
+            expressionBesoinItem.setQuantiteCommander(expressionBesoinItem.getQuantiteCommander() - qte);
+            expressionBesoinItemDao.save(expressionBesoinItem);
+            return 1;
+        }
+    }
+
 }
