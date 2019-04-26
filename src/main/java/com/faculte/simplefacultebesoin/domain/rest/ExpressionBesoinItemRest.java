@@ -52,7 +52,10 @@ public class ExpressionBesoinItemRest {
 
     @GetMapping("/find/{id}")
     public ExpressionBesoinItemVo findById(@PathVariable Long id) {
-        return expressionBesoinItemConverter.toVo(expressionBesoinItemService.findById(id));
+        ExpressionBesoinItemVo ebiv = expressionBesoinItemConverter.toVo(expressionBesoinItemService.findById(id));
+        String entite = expressionBesoinItemService.findById(id).getExpressionBesoin().getCodeEntity();
+        ebiv.setEntityAdmin(entite);
+        return ebiv;
     }
 
     @GetMapping("/produit/{referenceProduit}")
