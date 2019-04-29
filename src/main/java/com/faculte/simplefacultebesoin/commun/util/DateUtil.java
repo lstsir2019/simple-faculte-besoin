@@ -31,11 +31,16 @@ public class DateUtil {
 
     //convert String to date
     public static java.util.Date parseDate(String date) {
-        try {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            return (simpleDateFormat.parse(date));
-        } catch (ParseException e) {
+        if (date == null || date.isEmpty()) {
             return null;
+        } else {
+            try {
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                return simpleDateFormat.parse(date);
+            } catch (Exception ex) {
+                return null;
+            }
         }
+
     }
 }

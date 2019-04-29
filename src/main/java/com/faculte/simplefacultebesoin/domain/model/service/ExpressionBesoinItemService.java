@@ -8,6 +8,7 @@ package com.faculte.simplefacultebesoin.domain.model.service;
 import com.faculte.simplefacultebesoin.domain.bean.ExpressionBesoin;
 import com.faculte.simplefacultebesoin.domain.bean.ExpressionBesoinItem;
 import com.faculte.simplefacultebesoin.domain.rest.vo.ExpressionBesoinItemVo;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,5 +26,6 @@ public interface ExpressionBesoinItemService {
     public int incrementQteLivre(Long id,int qte);
     public int incrementQteCommande(Long id,int qte);
     public int decrementQteCommande(Long id,int qte);
+    public List<ExpressionBesoinItemVo> searchByDate(Date dateMin , Date dateMax,String referenceProduit);  
     
 }
