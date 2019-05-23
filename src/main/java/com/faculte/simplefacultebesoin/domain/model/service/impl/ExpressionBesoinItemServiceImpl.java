@@ -31,11 +31,11 @@ public class ExpressionBesoinItemServiceImpl implements ExpressionBesoinItemServ
 
     @Autowired
     ExpressionBesoinService expressionBesoinService;
-    
-    
+
     @Autowired
     ExpressionBesoinItemSearch expressionBesoinItemSearch;
 
+    //================================Services================================
     @Override
     public int create(ExpressionBesoin expressionBesoin, List<ExpressionBesoinItem> expressionBesoinItems) {
         if (expressionBesoinItems == null || expressionBesoinItems.isEmpty()) {
@@ -80,14 +80,14 @@ public class ExpressionBesoinItemServiceImpl implements ExpressionBesoinItemServ
     public int accoder(ExpressionBesoinItem expressionBesoinItem) {
         ExpressionBesoinItem ebi = expressionBesoinItemDao.getOne(expressionBesoinItem.getId());
 
-        if (ebi.getQuantiteAccorder() != 0) {
-            return -1;
-        } else if (expressionBesoinItem.getQuantiteAccorder() > expressionBesoinItem.getQuantiteDemande()) {
+        if (expressionBesoinItem.getQuantiteAccorder() > expressionBesoinItem.getQuantiteDemande()) {
             return -2;
+        } else if (expressionBesoinItem.getQuantiteAccorder() < expressionBesoinItem.getQuantiteCommander()) {
+            return -1;
         } else {
-            expressionBesoinItem.setQuantiteAccorder(expressionBesoinItem.getQuantiteAccorder());
-            expressionBesoinItem.setExpressionBesoin(expressionBesoinService.findByReference(ebi.getExpressionBesoin().getReference()));
-            expressionBesoinItemDao.save(expressionBesoinItem);
+            ebi.setQuantiteAccorder(expressionBesoinItem.getQuantiteAccorder());
+            ebi.setQuantiteDemande(expressionBesoinItem.getQuantiteDemande());
+            expressionBesoinItemDao.save(ebi);
             return 1;
         }
     }
@@ -127,12 +127,21 @@ public class ExpressionBesoinItemServiceImpl implements ExpressionBesoinItemServ
         }
     }
 
-    public ExpressionBesoinItemDao getExpressionBesoinItemDao() {
-        return expressionBesoinItemDao;
-    }
-
-    public void setExpressionBesoinItemDao(ExpressionBesoinItemDao expressionBesoinItemDao) {
-        this.expressionBesoinItemDao = expressionBesoinItemDao;
+    @Override
+    public int decrementQteLivre(Long id, int qte) {
+        
+        ExpressionBesoinItem ebi = this.findById(id);
+        if (ebi == null) {
+            return -1;
+        } else {
+            if (qte >  ebi.getQuantiteLivre()) {
+                return -2;
+            } else {
+                ebi.setQuantiteLivre(ebi.getQuantiteLivre() - qte);
+                expressionBesoinItemDao.save(ebi);
+                return 1;
+            }
+        }
     }
 
     @Override
@@ -170,20 +179,19 @@ public class ExpressionBesoinItemServiceImpl implements ExpressionBesoinItemServ
         ExpressionBesoinItem expressionBesoinItem = this.findById(id);
         if (expressionBesoinItem == null) {
             return -1;
-        }else if (qte > expressionBesoinItem.getQuantiteCommander()) {
+        } else if (qte > expressionBesoinItem.getQuantiteCommander()) {
             return -2;
-        }else{
+        } else {
             expressionBesoinItem.setQuantiteCommander(expressionBesoinItem.getQuantiteCommander() - qte);
             expressionBesoinItemDao.save(expressionBesoinItem);
             return 1;
         }
     }
 
-    
     @Override
-    public List<ExpressionBesoinItemVo> searchByDate(Date dateMin , Date dateMax,String referenceProduit) {
-        List<ExpressionBesoinItem> data = expressionBesoinItemSearch.searchByDate(dateMin, dateMax,referenceProduit);
-           List<ExpressionBesoinItemVo> res = new ArrayList();
+    public List<ExpressionBesoinItemVo> searchByDate(Date dateMin, Date dateMax, String referenceProduit) {
+        List<ExpressionBesoinItem> data = expressionBesoinItemSearch.searchByDate(dateMin, dateMax, referenceProduit);
+        List<ExpressionBesoinItemVo> res = new ArrayList();
         for (ExpressionBesoinItem expressionBesoinItem : data) {
             if (expressionBesoinItem.getQuantiteCommander() != expressionBesoinItem.getQuantiteAccorder()) {
                 ExpressionBesoinItemVo ebiv = new ExpressionBesoinItemVo();
@@ -198,4 +206,30 @@ public class ExpressionBesoinItemServiceImpl implements ExpressionBesoinItemServ
         }
         return res;
     }
+
+    //================================Getter And Setter================================
+    public ExpressionBesoinService getExpressionBesoinService() {
+        return expressionBesoinService;
+    }
+
+    public void setExpressionBesoinService(ExpressionBesoinService expressionBesoinService) {
+        this.expressionBesoinService = expressionBesoinService;
+    }
+
+    public ExpressionBesoinItemSearch getExpressionBesoinItemSearch() {
+        return expressionBesoinItemSearch;
+    }
+
+    public void setExpressionBesoinItemSearch(ExpressionBesoinItemSearch expressionBesoinItemSearch) {
+        this.expressionBesoinItemSearch = expressionBesoinItemSearch;
+    }
+
+    public ExpressionBesoinItemDao getExpressionBesoinItemDao() {
+        return expressionBesoinItemDao;
+    }
+
+    public void setExpressionBesoinItemDao(ExpressionBesoinItemDao expressionBesoinItemDao) {
+        this.expressionBesoinItemDao = expressionBesoinItemDao;
+    }
+
 }

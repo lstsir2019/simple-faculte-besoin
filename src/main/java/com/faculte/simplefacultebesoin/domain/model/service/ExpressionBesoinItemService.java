@@ -24,6 +24,7 @@ public interface ExpressionBesoinItemService {
     public List<ExpressionBesoinItemVo> findByReferenceProduit(String referenceProduit);
     public List<ExpressionBesoinItem> findByExpressionBesoinCodeEntity(String codeEntity);
     public int incrementQteLivre(Long id,int qte);
+    public int decrementQteLivre(Long id,int qte);
     public int incrementQteCommande(Long id,int qte);
     public int decrementQteCommande(Long id,int qte);
     public List<ExpressionBesoinItemVo> searchByDate(Date dateMin , Date dateMax,String referenceProduit);  
