@@ -8,6 +8,7 @@ package com.faculte.simplefacultebesoin.domain.model.service.impl;
 import com.faculte.simplefacultebesoin.commun.util.NumberUtil;
 import com.faculte.simplefacultebesoin.domain.bean.ExpressionBesoin;
 import com.faculte.simplefacultebesoin.domain.bean.ExpressionBesoinItem;
+import com.faculte.simplefacultebesoin.domain.model.dao.ExpressionBesoinDao;
 import com.faculte.simplefacultebesoin.domain.model.dao.ExpressionBesoinItemDao;
 import com.faculte.simplefacultebesoin.domain.model.search.ExpressionBesoinItemSearch;
 import com.faculte.simplefacultebesoin.domain.model.service.ExpressionBesoinItemService;
@@ -28,6 +29,9 @@ public class ExpressionBesoinItemServiceImpl implements ExpressionBesoinItemServ
 
     @Autowired
     ExpressionBesoinItemDao expressionBesoinItemDao;
+    
+    @Autowired
+    ExpressionBesoinDao expressionBesoinDao;
 
     @Autowired
     ExpressionBesoinService expressionBesoinService;
@@ -67,10 +71,17 @@ public class ExpressionBesoinItemServiceImpl implements ExpressionBesoinItemServ
             return -1;
         } else {
             ExpressionBesoinItem expressionBesoinItem = expressionBesoinItemDao.getOne(id);
+            
             if (expressionBesoinItem.getQuantiteCommander() != 0) {
                 return -2;
             } else {
                 expressionBesoinItemDao.deleteById(id);
+                ExpressionBesoin eb = expressionBesoinDao.getOne(expressionBesoinItem.getExpressionBesoin().getId());
+                List<ExpressionBesoinItem> res = expressionBesoinItemDao.findByExpressionBesoinReference(eb.getReference());
+                System.out.println("haaaaa size ===>"+res.size());
+                if (res.size() == 0 ) {
+                    expressionBesoinDao.deleteById(eb.getId());
+                }
                 return 1;
             }
         }
