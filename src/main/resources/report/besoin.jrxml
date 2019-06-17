@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c972a7c0-cf34-4cea-beaf-22ec9b3a4005">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id" class="java.lang.Long"/>
+	<parameter name="reference" class="java.lang.String"/>
+	<parameter name="date" class="java.util.Date"/>
+	<parameter name="codeEntity" class="java.lang.String"/>
+	<parameter name="codePersonel" class="java.lang.String"/>
+	<field name="referenceCategorieProduit" class="java.lang.String"/>
+	<field name="quantiteDemande" class="java.lang.Integer"/>
+	<field name="quantiteAccorder" class="java.lang.Integer"/>
+	<field name="quantiteCommander" class="java.lang.Integer"/>
+	<field name="quantiteLivre" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="138" splitType="Stretch">
+			<staticText>
+				<reportElement x="108" y="58" width="287" height="24" uuid="39dffcb3-dadf-40d2-951a-d133f6406749"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Faculté des Sciences et Techniques]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="314" y="93" width="164" height="24" forecolor="#666666" uuid="5a5929a0-6fb6-4887-b320-05c3e38ae5e4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[Expression de besoin ]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Opaque" x="-22" y="93" width="336" height="24" isRemoveLineWhenBlank="true" forecolor="#F0F0F0" backcolor="#FF9900" uuid="e2333a09-5f6f-4c25-aac9-df9a47f275f7"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Opaque" x="478" y="93" width="106" height="24" isRemoveLineWhenBlank="true" forecolor="#F0F0F0" backcolor="#FF9900" uuid="a1b0a4f6-fb8f-4e16-b670-bea8b5c0369b"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="-22" y="93" width="16" height="24" forecolor="#F0F0F0" backcolor="#666666" uuid="d7e8668d-19fb-4660-b01d-5e07ad7e80a7"/>
+			</rectangle>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="38" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="77" height="20" uuid="afbd1fb9-061a-4eb3-b85f-34e8ca4e6b6f"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[reference]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="178" y="0" width="69" height="20" uuid="b2bcd998-b02b-4d97-bf28-9bf76eccfdf2"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[codeEntity]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="380" y="0" width="89" height="20" uuid="1015d73d-b4d5-4b2d-a3f2-81208f881e2e"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[codePersonel]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="77" y="5" width="100" height="20" uuid="feb91941-3668-4ec4-877e-3153cae81608"/>
+				<textFieldExpression><![CDATA[$P{reference}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="247" y="5" width="100" height="20" uuid="42475aa5-e861-4db9-9da7-cd1eba5a78d1"/>
+				<textFieldExpression><![CDATA[$P{codeEntity}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="469" y="5" width="100" height="20" uuid="23aa3295-333e-4445-9e43-5dd961f0b90c"/>
+				<textFieldExpression><![CDATA[$P{codePersonel}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="121" height="20" forecolor="#666666" backcolor="#FF9900" uuid="3336b871-797d-4bfe-a593-441067f29251"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[categorier]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="247" y="0" width="100" height="20" forecolor="#666666" backcolor="#FF9900" uuid="8152dd6c-f045-447e-8b1f-0b81f3fb0504"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[qte accorde]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="121" y="0" width="126" height="20" forecolor="#666666" backcolor="#FF9900" uuid="716cfa70-2368-4ebf-a2f6-ef3da483457d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ qte demande]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="347" y="0" width="122" height="20" forecolor="#666666" backcolor="#FF9900" uuid="8a054a5c-f8ee-4b4b-a084-f4ed08245396"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[qte commande]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="469" y="0" width="115" height="20" forecolor="#666666" backcolor="#FF9900" uuid="bcb8d009-d4c1-4326-85f1-71d7e0536588"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[qte livre]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="27" splitType="Stretch">
+			<textField>
+				<reportElement x="20" y="0" width="88" height="20" uuid="ca1ec9ea-5821-4ba3-b042-fa87688e1537"/>
+				<textFieldExpression><![CDATA[$F{referenceCategorieProduit}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="149" y="0" width="73" height="20" uuid="dd7b2f72-f527-4810-bfd0-6c25ab98bd5c"/>
+				<textFieldExpression><![CDATA[$F{quantiteDemande}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="266" y="0" width="67" height="20" uuid="5ff5ab2e-7879-4f80-9d7b-43e5c55382af"/>
+				<textFieldExpression><![CDATA[$F{quantiteAccorder}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="365" y="0" width="79" height="20" uuid="69d71b17-99e5-4eb9-8662-ab555e633fac"/>
+				<textFieldExpression><![CDATA[$F{quantiteCommander}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="507" y="0" width="57" height="20" uuid="cfdb4a7e-26a5-4388-bc61-2ace42de30cb"/>
+				<textFieldExpression><![CDATA[$F{quantiteLivre}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="104" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="365" y="14" width="71" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="b99d1c75-07f3-4dbf-8683-b1a398922077"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="336" y="50" width="100" height="20" uuid="bd4b8cb2-85fb-4290-a069-3e74e2e584ad"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Signature]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="444" y="18" width="100" height="20" uuid="8f91070d-3266-417f-a0f1-013dd1f2250e"/>
+				<textFieldExpression><![CDATA[$P{date}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="76" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="6" width="555" height="20" uuid="6c409674-ad3f-4070-a445-6632c2f866b0"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[ Faculté des Sciences et Techniques]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="26" width="555" height="45" uuid="123dc157-ef97-45be-bd54-76c941e6cca9"/>
+				<textElement textAlignment="Center">
+					<font isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[ B.P 549, Av.Abdelkarim Elkhattabi, Guéliz Marrakech
+  Tél : (+212) 524 43 34 04  Fax: (+212) 524 43 31 70 ]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="-22" y="0" width="22" height="6" forecolor="#F0F0F0" backcolor="#666666" uuid="6789a0a8-0bc7-4fa5-98cc-d9834ab2806f"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="0" width="584" height="6" isRemoveLineWhenBlank="true" forecolor="#F0F0F0" backcolor="#FF9900" uuid="5419cb21-6000-4dd2-a91e-9114a8a00a3b"/>
+			</rectangle>
+		</band>
+	</pageFooter>
+</jasperReport>

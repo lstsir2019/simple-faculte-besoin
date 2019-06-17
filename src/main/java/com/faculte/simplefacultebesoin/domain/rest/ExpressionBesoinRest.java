@@ -6,6 +6,7 @@
 package com.faculte.simplefacultebesoin.domain.rest;
 
 import com.faculte.simplefacultebesoin.commun.util.DateUtil;
+import com.faculte.simplefacultebesoin.commun.util.GeneratePdf;
 import com.faculte.simplefacultebesoin.domain.bean.ExpressionBesoin;
 import com.faculte.simplefacultebesoin.domain.bean.ExpressionBesoinItem;
 import com.faculte.simplefacultebesoin.domain.model.service.ExpressionBesoinItemService;
@@ -17,10 +18,15 @@ import com.faculte.simplefacultebesoin.domain.rest.vo.ExpressionBesoinItemVo;
 import com.faculte.simplefacultebesoin.domain.rest.vo.ExpressionBesoinVo;
 import com.faculte.simplefacultebesoin.domain.rest.vo.exchange.CategorieProduitVo;
 import com.faculte.simplefacultebesoin.domain.rest.vo.exchange.ProduitVo;
+import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -95,6 +101,19 @@ public class ExpressionBesoinRest {
         return produitProxy.findByCategorieProduitLibelle(libelle);
     }
 
+    
+    @GetMapping("/pdf/reference/{reference}")
+    public ResponseEntity<Object> CommandePrint(@PathVariable String reference) throws JRException, IOException {
+        ExpressionBesoin c = expressionBesoinService.findByReference(reference);
+
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("reference", c.getReference());
+        parameters.put("date", c.getDateExpression());
+        parameters.put("codeEntity", c.getCodeEntity());
+        parameters.put("codePersonel", c.getCodePersonel());
+
+        return GeneratePdf.generate("expression besoin", parameters, expressionBesoinItemService.findByExpressionBesoinReference(reference), "/report/besoin.jasper");
+    }
     public AbstractConverter<ExpressionBesoin, ExpressionBesoinVo> getExpressionBesoinConverter() {
         return expressionBesoinConverter;
     }
