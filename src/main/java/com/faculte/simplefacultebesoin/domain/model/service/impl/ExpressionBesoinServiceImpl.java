@@ -49,6 +49,7 @@ public class ExpressionBesoinServiceImpl implements ExpressionBesoinService {
         }
     }
     
+   
 
     @Override
     public List<ExpressionBesoin> findByCriteria(String reference, String codeEntity , Date dateMin , Date dateMax) {
@@ -83,6 +84,8 @@ public class ExpressionBesoinServiceImpl implements ExpressionBesoinService {
     public void setExpressionBesoinSearch(ExpressionBesoinSearch expressionBesoinSearch) {
         this.expressionBesoinSearch = expressionBesoinSearch;
     }
+
+    
     
     
 

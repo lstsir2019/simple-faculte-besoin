@@ -28,5 +28,6 @@ public interface ExpressionBesoinItemService {
     public int incrementQteCommande(Long id,int qte);
     public int decrementQteCommande(Long id,int qte);
     public List<ExpressionBesoinItemVo> searchByDate(Date dateMin , Date dateMax,String referenceProduit);  
+     public int besoinnonAccorder();
     
 }

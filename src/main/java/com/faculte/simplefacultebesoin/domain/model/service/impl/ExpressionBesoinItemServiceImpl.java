@@ -218,6 +218,17 @@ public class ExpressionBesoinItemServiceImpl implements ExpressionBesoinItemServ
         return res;
     }
 
+    
+     @Override
+    public int besoinnonAccorder() {
+        int x=0;
+        List<ExpressionBesoinItem> besoinItems=expressionBesoinItemDao.findAll();
+         for (ExpressionBesoinItem besoinItem : besoinItems) {
+             if (besoinItem.getQuantiteAccorder()==0) x=x+1;
+                
+         }
+         return x;
+    }
     //================================Getter And Setter================================
     public ExpressionBesoinService getExpressionBesoinService() {
         return expressionBesoinService;
@@ -242,5 +253,7 @@ public class ExpressionBesoinItemServiceImpl implements ExpressionBesoinItemServ
     public void setExpressionBesoinItemDao(ExpressionBesoinItemDao expressionBesoinItemDao) {
         this.expressionBesoinItemDao = expressionBesoinItemDao;
     }
+
+   
 
 }

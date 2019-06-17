@@ -18,4 +18,5 @@ public interface ExpressionBesoinService {
     public int create(ExpressionBesoin expressionBesoin);
     public List<ExpressionBesoin> findAll();
     public List<ExpressionBesoin> findByCriteria(String reference, String codeEntity , Date dateMin , Date dateMax);
+   
 }

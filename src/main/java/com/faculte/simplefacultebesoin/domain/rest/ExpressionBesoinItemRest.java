@@ -97,6 +97,12 @@ public class ExpressionBesoinItemRest {
         Date dateMax=DateUtil.parseDate(ebiv.getDateMax());
         return expressionBesoinItemService.searchByDate(dateMin,dateMax, referenceProduit);
     }
+
+    @GetMapping("/besoinnonaccorder")
+    public int besoinnonAccorder() {
+        return expressionBesoinItemService.besoinnonAccorder();
+    }
+    
     
 
     // ===========Getter & Setter ===========
